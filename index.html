@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Alphabet Reflex</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="text-center">
+            <div class="level-options">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input levels" id="customRadio1" name="level1"
+                        value="easy">
+                    <label class="custom-control-label" for="customRadio1">Easy</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input levels" id="customRadio2" name="level2"
+                        value="medium">
+                    <label class="custom-control-label" for="customRadio2">Medium</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input levels" id="customRadio3" name="level3"
+                        value="hard">
+                    <label class="custom-control-label" for="customRadio3">Hard</label>
+                </div>
+            </div>
+            <br>
+            <button type="button" class="btn start-btn hide" onclick="start()">Start Game</button>
+            <button type="button" class="btn stop-btn hide" onclick="stop()">Stop Button</button>
+            <h2 id="random-number">Choose difficulty to beggin</h2>
+            <form class="answer-form">
+                <input id="letter-input" class="form-control" type="text" maxlength="1" placeholder="input-letter">
+            </form>
+            <div class="result">
+                <p>Correct: <span id="correct">0</span></p>
+                <p>Left: <span id="left">0</span></p>
+                <p>Inorrect: <span id="incorrect">0</span></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2 letter" data-v="A" data-n="1">
+                A (1)
+            </div>
+            <div class="col-2 letter" data-v="B" data-n="2">
+                B (2)
+            </div>
+            <div class="col-2 letter" data-v="C" data-n="3">
+                C (3)
+            </div>
+            <div class="col-2 letter" data-v="D" data-n="4">
+                D (4)
+            </div>
+            <div class="col-2 letter" data-v="E" data-n="5">
+                E (5)
+            </div>
+            <div class="col-2 letter" data-v="F" data-n="6">
+                F (6)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 letter" data-v="G" data-n="7">
+                G (7)
+            </div>
+            <div class="col-2 letter" data-v="H" data-n="8">
+                H (8)
+            </div>
+            <div class="col-2 letter" data-v="I" data-n="9">
+                I (9)
+            </div>
+            <div class="col-2 letter" data-v="J" data-n="10">
+                J (10)
+            </div>
+            <div class="col-2 letter" data-v="K" data-n="11">
+                K (11)
+            </div>
+            <div class="col-2 letter" data-v="L" data-n="12">
+                L (12)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 letter" data-v="M" data-n="13">
+                M (13)
+            </div>
+            <div class="col-2 letter" data-v="N" data-n="14">
+                N (14)
+            </div>
+            <div class="col-2 letter" data-v="O" data-n="15">
+                O (15)
+            </div>
+            <div class="col-2 letter" data-v="P" data-n="16">
+                P (16)
+            </div>
+            <div class="col-2 letter" data-v="Q" data-n="17">
+                Q (17)
+            </div>
+            <div class="col-2 letter" data-v="R" data-n="18">
+                R (18)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 letter" data-v="S" data-n="19">
+                S (19)
+            </div>
+            <div class="col-2 letter" data-v="T" data-n="20">
+                T (20)
+            </div>
+            <div class="col-2 letter" data-v="U" data-n="21">
+                U (21)
+            </div>
+            <div class="col-2 letter" data-v="V" data-n="22">
+                V (22)
+            </div>
+            <div class="col-2 letter" data-v="W" data-n="23">
+                W (23)
+            </div>
+            <div class="col-2 letter" data-v="X" data-n="24">
+                X (24)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 letter" data-v="Y" data-n="25">
+                Y (25)
+            </div>
+            <div class="col-2 letter" data-v="Z" data-n="26">
+                Z (26)
+            </div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

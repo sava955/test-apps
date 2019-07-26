@@ -1,0 +1,40 @@
+body {
+    padding: 20px;
+    color: #fff !important;
+    background: #212529 !important;
+}
+
+.btn {
+    margin-top: 20px;
+    background-color: transparent !important;
+    border:  2px solid yellow !important;
+    color: #fff !important;
+}
+
+#random-number {
+    padding: 20px !important;
+}
+
+.form-control {
+    width: 10% !important;
+    margin: auto !important;
+    background: transparent !important;
+    color: #fff !important;
+}
+
+#correct {
+    color: green;
+}
+
+#incorrect {
+    color: red;
+}
+
+.row {
+    padding-bottom: 20px;
+    font-size: 22px;
+}
+
+.hide {
+    display: none !important;
+}
