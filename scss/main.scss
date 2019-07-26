@@ -1,0 +1,159 @@
+$primary-color: #2196f3;
+$light-gray: #999999;
+$white: #ffffff;
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fafafa;
+}
+
+header {
+    padding: 10px;
+    background-color: $primary-color;
+    color: $white;
+}
+
+#home {
+    margin: auto;
+    width: 90%;
+}
+
+.form-group {
+    position: relative;
+    margin-top: 20px;
+
+    .form-control {
+        width: 100%;
+        padding: 10px 0;
+        background: transparent;
+        font-size: 16px;
+        border: none;
+        border-bottom: 1px #999 solid;
+        outline: none;
+
+        &:focus ~ .text-label,
+        &:valid ~ .text-label {
+            top: -15px;
+            left: 0;
+            color: $primary-color;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        &:focus+.line, &:valid+.line {
+            width: 100%;
+            background-color: $primary-color;
+        }
+    }
+
+    p {
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    .text-label {
+        position: absolute;
+        top: 1rem;
+        left: 0;
+        color: #999;
+        transition: .5s;
+        pointer-events: none;
+    }
+
+    .line {
+        height: 2px;
+        width: 0px;
+        position: absolute;
+        background-color: $primary-color;
+        z-index: 1;
+        display: inline-block;
+        transition: .2s width ease-in-out;
+        position: relative;
+        top: -14px;
+    }
+
+    .radio-form {
+        padding: 10px;
+        margin-left: 20px;
+    }
+
+    .radio {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .radio + .radio-label {
+        position: relative;
+        padding: 3px 0 0 40px;
+        cursor: pointer;
+    }
+
+    .radio + .radio-label:before {
+        content: '';
+        background: $white;
+        border: 2px solid #46d5b5;
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        position: absolute;
+        top: 5px;
+        left: 0;
+    }
+
+    .radio + .radio-label:after {
+        content: '';
+        background: #46d5b5;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        position: absolute;
+        top: 12px;
+        left: 7px;
+        opacity: 0;
+        transform: scale(2);
+        transition: transform 0.3s linear, opacity 0.3s linear;
+    }
+
+    .radio:checked + .radio-label:after {
+        opacity: 1;
+    }
+
+}
+
+.btn {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 20px;
+    background: $primary-color;
+    color: $white;
+    border: none;
+    border-radius: 20px;
+    text-align: center;
+    transition-duration: 0.4s;
+    overflow: hidden;
+    box-shadow: 0 5px 15px $light-gray;
+
+    &:after {
+        content: "";
+        background: $primary-color;
+        display: block;
+        position: absolute;
+        padding-top: 100%;
+        padding-left: 100%;
+        margin-left: -20px !important;
+        margin-top: -30%;
+        opacity: 0;
+        border-radius: 50%;
+        transition: all 0.8s;
+    }
+      
+    &:active:after {
+        padding: 0;
+        margin: 0;
+        opacity: 1;
+        transition: 0s
+    }
+      
+    &:focus { outline:0; }
+}
