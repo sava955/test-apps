@@ -1,107 +1,115 @@
 const startBtn = document.querySelector('.start-btn');
-        const stopBtn = document.querySelector('.stop-btn');
-        const levelOptions = document.querySelector('.level-options');
-        const levelInput = document.querySelectorAll('.levels');
-        const input = document.getElementById('letter-input');
-        let randomNumber = document.getElementById('random-number');
-        const letter = document.querySelectorAll('.letter');
-        let interval;
-        let correctAnswer = document.getElementById('correct');
-        let numbersLeft = document.getElementById('left');
-        let incorrectAnswer = document.getElementById('incorrect');
-        let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
-        let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-        let findIndex;
-        let showNumber;
-        let correct = 1;
-        let incorrect = 1;
-        let time = 0;
+const stopBtn = document.querySelector('.stop-btn');
+const levelOptions = document.querySelector('.level-options');
+const levelInput = document.querySelectorAll('.levels');
+const input = document.getElementById('letter-input');
+let randomNumber = document.getElementById('random-number');
+const letter = document.querySelectorAll('.letter');
+let interval;
+let correctAnswer = document.getElementById('correct');
+let numbersLeft = document.getElementById('left');
+let incorrectAnswer = document.getElementById('incorrect');
+let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+let findIndex;
+let showNumber;
+let correctNumbers = [];
+let incorrectNumbers = [];
+let correct;
+let time = 0;
+let inputValue;
 
-        levelInput.forEach(function (lInput) {
-            lInput.addEventListener('click', function (item) {
-                let value = item.target.value;
-                if (value == 'easy') {
-                    time = 5000;
-                }
-                if (value == 'medium') {
-                    time = 3500;
-                }
-                if (value == 'hard') {
-                    time = 2500;
-                }
-                startBtn.classList.remove('hide');
-            });
-        });
-
-        function start() {
-            interval = setInterval(function () { getNumbers(); }, time);
+levelInput.forEach(function (lInput) {
+    lInput.addEventListener('click', function (item) {
+        let value = item.target.value;
+        if (value == 'easy') {
+            time = 5000;
         }
+        if (value == 'medium') {
+            time = 3500;
+        }
+        if (value == 'hard') {
+            time = 2500;
+        }
+        startBtn.classList.remove('hide');
+        randomNumber.textContent = "Game starts soon";
+    });
+});
 
-        function getNumbers() {
-            stopBtn.classList.remove('hide');
-            startBtn.classList.add('hide');
-            input.value = '';
-            input.style.display = "block";
-            levelOptions.style.display = "none";
-            input.focus();
-            if (numbers.length > 0) {
-                getRandom();
-                showNumber = numbers.shift();
-                numbersLeft.textContent = numbers.length;
-                if (showNumber != findIndex) {
-                    incorrectAnswer.textContent = (incorrect++) - correct + 1;
-                    letter.forEach(function (item) {
-                        let char = item.dataset.n;
+startBtn.addEventListener('click', function () {
+    letter.forEach(function (item) {
+        item.style.color = "#ffffff";
+    });
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
+    correctNumbers = [];
+    incorrectNumbers = [];
+    levelOptions.style.display = "none";
+    stopBtn.classList.remove('hide');
+    startBtn.classList.add('hide');
+    interval = setInterval(function () { getNumbers() }, time);
+});
 
-                        if (char == showNumber) {
-                            item.style.color = "red";
-                        }
-                    });
-                }
-                randomNumber.textContent = showNumber;
+stopBtn.addEventListener('click', function () {
+    levelOptions.style.display = "block";
+    clearInterval(interval);
+    stopBtn.classList.add('hide');
+    randomNumber.textContent = "Choose difficulty to play again"
+    letter.forEach(function (item) {
+        item.style.color = "#ffffff";
+    });
+});
 
-            } else {
-                randomNumber.textContent = "You have finished";
-                stop();
+input.addEventListener('keypress', function (evt) {
+    evt = evt || event;
+    inputValue = String.fromCharCode(evt.which).toUpperCase();
+    findIndex = letters.indexOf(inputValue) + 1;
+    checkAnswer();
+});
+
+function getRandom() {
+    numbers.sort(function (a, b) { return 0.5 - Math.random() });
+}
+
+function getNumbers() {
+    getRandom();
+    input.style.display = "block";
+    input.focus();
+    input.value = '';
+    if (numbers.length > 0) {
+        showNumber = numbers.shift();
+        randomNumber.textContent = showNumber;
+        numbersLeft.textContent = numbers.length;
+        checkAnswer();
+    } else {
+        randomNumber.textContent = "You have finished";
+        stopBtn.classList.add('hide');
+        levelOptions.style.display = "block";
+        input.style.display = "none";
+        clearInterval(interval);
+    }
+}
+
+function checkAnswer() {
+    if (findIndex == showNumber) {
+        letter.forEach(function (item) {
+            let value = item.dataset.v;
+
+            if (value.includes(inputValue)) {
+                item.style.color = "green";
             }
-        }
-
-        function stop() {
-            clearInterval(interval);
-            incorrect = 0;
-            correct = 0;
-            interval = setInterval(getNumbers(), time);
-            numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
-            incorrectAnswer.textContent = "0";
-            numbersLeft.textContent = "0";
-            levelOptions.style.display = "block";
-            startBtn.classList.remove('hide');
-            stopBtn.classList.add('hide');
-            randomNumber.innerHTML = "Press start to play again";
-            letter.forEach(function (item) {
-                item.style.color = "#ffffff";
-            });
-        }
-
-        input.addEventListener('keypress', function (evt) {
-            evt = evt || event;
-            let inputValue = String.fromCharCode(evt.which).toUpperCase();
-            findIndex = letters.indexOf(inputValue) + 1;
-            if (findIndex === showNumber) {
-                document.getElementById('correct').innerHTML = correct++;
-                letter.forEach(function (item) {
-                    let char = item.dataset.v;
-
-                    if (char.includes(inputValue)) {
-                        item.style.color = "green";
-                    }
-                });
-            } else {
-                incorrectAnswer.textContent = (incorrect++) - correct;
-            }
-            input.style.display = 'none';
         });
+        input.style.display = "none";
+        correct = incorrectNumbers.splice(-1, 1);
+        correctNumbers.push(correct);
+        correctAnswer.textContent = correctNumbers.length;
+    } else {
+        letter.forEach(function (item) {
+            let value = item.dataset.n;
 
-        function getRandom() {
-            numbers.sort(function (a, b) { return 0.5 - Math.random() });
-        }
+            if (value == showNumber) {
+                item.style.color = "red";
+                incorrectNumbers.push(value);
+                incorrectAnswer.textContent = incorrectNumbers.length - 1;
+            }
+        });
+    }
+}
