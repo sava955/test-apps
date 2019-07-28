@@ -15,6 +15,7 @@ let showNumber;
 let correctNumbers = [];
 let incorrectNumbers = [];
 let correct;
+let incorrect;
 let time = 0;
 let inputValue;
 
@@ -42,6 +43,8 @@ startBtn.addEventListener('click', function () {
     numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
     correctNumbers = [];
     incorrectNumbers = [];
+    correctAnswer.textContent = 0;
+    incorrectAnswer.textContent = 0;
     levelOptions.style.display = "none";
     stopBtn.classList.remove('hide');
     startBtn.classList.add('hide');
@@ -63,6 +66,7 @@ input.addEventListener('keypress', function (evt) {
     inputValue = String.fromCharCode(evt.which).toUpperCase();
     findIndex = letters.indexOf(inputValue) + 1;
     checkAnswer();
+    input.style.display = "none";
 });
 
 function getRandom() {
@@ -74,12 +78,25 @@ function getNumbers() {
     input.style.display = "block";
     input.focus();
     input.value = '';
+    
     if (numbers.length > 0) {
         showNumber = numbers.shift();
         randomNumber.textContent = showNumber;
         numbersLeft.textContent = numbers.length;
+        letter.forEach(function (item) {
+            let value = item.dataset.n;
+    
+            if (value == showNumber) {
+                item.style.color = "red";
+                incorrectNumbers.push(value);
+                console.log(incorrectNumbers);
+                incorrectAnswer.textContent = incorrectNumbers.length;
+            }
+        });
         checkAnswer();
+        
     } else {
+        incorrectAnswer.textContent = incorrectNumbers.length;
         randomNumber.textContent = "You have finished";
         stopBtn.classList.add('hide');
         levelOptions.style.display = "block";
@@ -101,15 +118,5 @@ function checkAnswer() {
         correct = incorrectNumbers.splice(-1, 1);
         correctNumbers.push(correct);
         correctAnswer.textContent = correctNumbers.length;
-    } else {
-        letter.forEach(function (item) {
-            let value = item.dataset.n;
-
-            if (value == showNumber) {
-                item.style.color = "red";
-                incorrectNumbers.push(value);
-                incorrectAnswer.textContent = incorrectNumbers.length - 1;
-            }
-        });
     }
 }
