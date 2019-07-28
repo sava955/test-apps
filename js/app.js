@@ -5,6 +5,7 @@ const levelInput = document.querySelectorAll('.levels');
 const input = document.getElementById('letter-input');
 let randomNumber = document.getElementById('random-number');
 const letter = document.querySelectorAll('.letter');
+let numbers;
 let interval;
 let correctAnswer = document.getElementById('correct');
 let numbersLeft = document.getElementById('left');
@@ -89,7 +90,6 @@ function getNumbers() {
             if (value == showNumber) {
                 item.style.color = "red";
                 incorrectNumbers.push(value);
-                console.log(incorrectNumbers);
                 incorrectAnswer.textContent = incorrectNumbers.length;
             }
         });
