@@ -21,7 +21,7 @@
         class="form-control"
         style="display:none"
         @change="onFileSelected">
-      <button @click="$refs.fileInput.click()">Choose an avatar</button>
+      <button @click.prevent="$refs.fileInput.click()">Choose an avatar</button>
     </div>
     <div class="form-group">
       <input
@@ -44,18 +44,18 @@ export default {
     return {
       newUser: {
         first_name: '',
-        avatar: null,
+        avatar: '@/assets/images/avatar.jpg',
         last_name: '',
         email: '',
       },
-      // selectedFile: null
+       selectedFile: null
     };
   },
   methods: {
     resetUser() {
       this.newUser.first_name = '';
       this.newUser.last_name = '';
-      this.newUser.avatar = '';
+      this.newUser.avatar = null;
       this.newUser.email = '';
     },
     onFileSelected(event) {
@@ -63,11 +63,12 @@ export default {
     },
     createUser() {
       debugger;
-      /* const fd = new FormData();
+      /*const fd = new FormData();
             fd.append('first_name', this.newUser.first_name);
             fd.append('last_name', this.newUser.last_name);
-            fd.append('avatar', this.selectedFile, this.selectedFile.name);
-            fd.append('email', this.newUser.email); */
+            fd.append('avatar', this.newUser.avatar);
+            fd.append('email', this.newUser.email); 
+            console.log(this.newUser.avatar)*/
       this.$store.dispatch('users/createUser', this.newUser)
         .then(res => console.log(res));
     },

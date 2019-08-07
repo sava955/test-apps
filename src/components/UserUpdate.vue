@@ -25,7 +25,7 @@
           @click="updateUser">Update</a>
         <a
           class="btn btn-danger"
-          @click="$emit('toggleUpdate', false) ">Cancle</a>
+          @click="$emit('toggleUpdate', false)">Cancle</a>
       </div>
     </div>
   </div>
@@ -48,8 +48,9 @@ export default {
   },
   methods: {
     updateUser() {
-      axios.patch(`https://reqres.in/api/users/${this.modifiedUser.id}`)
+      this.$store.dispatch('users/updateUser', this.modifiedUser)
         .then((res) => {
+          debugger;
           console.log(res.data);
           this.$emit('toggleUpdate', false);
         });

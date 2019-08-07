@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import UserDetail from './UserDetail';
 import UserUpdate from './UserUpdate';
 

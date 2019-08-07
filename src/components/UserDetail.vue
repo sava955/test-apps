@@ -16,7 +16,7 @@
           @click="$emit('toggleUpdate', true)">Edit</a>
         <a
           class="btn btn-danger"
-          @click.prevent="showDeleteUserWarning(user.id)">Delete</a>
+          @click.prevent="showDeleteUserWarning">Delete</a>
       </div>
     </div>
   </div>
@@ -45,10 +45,10 @@ export default {
           });
       }
     } */
-    showDeleteUserWarning(userId) {
+    showDeleteUserWarning() {
       debugger;
-      this.$store.dispatch('users/deleteUser', userId)
-        .then(res => console.log(res));
+      this.$store.dispatch('users/deleteUser', this.user.id)
+        .then(id => console.log(id));
     },
   },
 };

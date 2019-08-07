@@ -10,7 +10,6 @@
  *
  * The entry point of the application.
  */
-import Vue from 'vue';
 
 export default {
   /**
