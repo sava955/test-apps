@@ -40,7 +40,6 @@ import './plugins/register-service-worker';
  */
 
 import './assets/stylus/app.styl';
-
 /* ============
  * Main App
  * ============
@@ -50,6 +49,9 @@ import './assets/stylus/app.styl';
 
 import App from './App.vue';
 import store from './store';
+import Paginate from 'vuejs-paginate';
+
+Vue.component('paginate', Paginate);
 
 Vue.config.productionTip = false;
 

@@ -1,76 +1,31 @@
 <template>
   <v-layout>
     <v-card contextual-style="dark">
-      <span slot="header">
-        {{ $t('general.welcome') }}
-      </span>
+      <span slot="header">{{ $t('general.welcome') }}</span>
       <div slot="body">
-        <p>
-          Get started with the Vue 2 boilerplate
-        </p>
-        <p>
-          For questions, contact me:
-        </p>
-        <p>
-          <a
-            class="btn btn-outline-primary"
-            href="http://gitter.im/petervmeijgaard"
-            target="_blank"
-          >
-            <i
-              class="fa fa-github fa-fw"
-              aria-hidden="true"
-            />
-            <span class="pl-2">
-              Gitter
-            </span>
-          </a>
-          <a
-            class="btn btn-outline-primary"
-            href="http://github.com/petervmeijgaard"
-            target="_blank"
-          >
-            <i
-              class="fa fa-github fa-fw"
-              aria-hidden="true"
-            />
-            <span class="pl-2">
-              GitHub
-            </span>
-          </a>
-          <a
-            class="btn btn-outline-primary"
-            href="http://twitter.com/petervmeijgaard"
-            target="_blank"
-          >
-            <i
-              class="fa fa-twitter fa-fw"
-              aria-hidden="true"
-            />
-            <span class="pl-2">
-              Twitter
-            </span>
-          </a>
-        </p>
-        <p>
-          For bugs, see:
-        </p>
-        <a
-          class="btn btn-outline-primary"
-          href="https://github.com/petervmeijgaard/vue-2.0-boilerplate/issues"
-          target="_blank"
-        >
-          <i
-            class="fa fa-github fa-fw"
-            aria-hidden="true"
-          />
-          <span class="pl-2">
-            GitHub
-          </span>
-        </a>
-      </div>
-      <div slot="footer">
-        Made with love by Vivid Web
+        <div class="container">
+          <!--h2>{{ fullAppName }}</h2-->
+          <div class="row">
+            <div class="col-sm-3">
+              <UserCreate />
+            </div>
+            <div class="col-sm-9">
+              <!--UsersList v-for="activity in activities" :activity="activity" :key="activity.id" /-->
+              <User
+                v-for="user in users"
+                :user="user"
+                :key="user.id" />
+              <!--div class="activity-length">Currently {{activityLength}}</div-->
+              <paginate
+                :page-count="pagination.total_pages"
+                :click-handler="fetchPaginatedUsers"
+                :prev-text="'Prev'"
+                :next-text="'Next'"
+                :container-class="'paginationContainer'"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </v-card>
   </v-layout>
@@ -86,6 +41,9 @@
 
 import VLayout from '@/layouts/Default.vue';
 import VCard from '@/components/Card.vue';
+import { mapActions, mapState, mapGetters, mapMutations } from 'vuex';
+import User from '@/components/User';
+import UserCreate from '@/components/UserCreate';
 
 export default {
   /**
@@ -99,6 +57,75 @@ export default {
   components: {
     VLayout,
     VCard,
+    User,
+    UserCreate,
+  },
+  computed: {
+    ...mapState({
+      users: state => state.users.items,
+      pagination: state => state.users.pagination,
+    }),
+  },
+  created() {
+    this.fetchUsers();
+  },
+  methods: {
+    ...mapActions('users', ['fetchUsers']),
+    handleFetchedUsers() {
+      const filter = {};
+      // filter['total_pages'] = this.pagination.total_pages;
+      filter.page = this.pagination.page;
+
+      return this.fetchUsers({ filter });
+    },
+    fetchPaginatedUsers(page) {
+      this.setPage(page);
+      this.handleFetchedUsers();
+    },
+    setPage(page) {
+      this.$store.commit('users/setPage', page);
+    },
   },
 };
 </script>
+
+<style>
+.paginationContainer {
+  display: inline-block;
+  padding-left: 0;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+.paginationContainer li {
+  display: inline;
+  font-size: 18px;
+}
+
+.paginationContainer a {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: #00d1b2;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.paginationContainer .active a {
+  z-index: 2;
+  color: #fff;
+  cursor: default;
+  background-color: #00d1b2;
+  border-color: #00d1b2;
+}
+
+.paginationContainer .disabled a {
+  color: #777;
+  cursor: not-allowed;
+  background-color: #fff;
+  border-color: #ddd;
+}
+</style>

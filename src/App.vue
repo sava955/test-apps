@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 <script>
@@ -10,13 +10,13 @@
  *
  * The entry point of the application.
  */
+import Vue from 'vue';
 
 export default {
   /**
    * The name of the application.
    */
   name: 'VueBoilerplate',
-
   /**
    * Fires when the app has been mounted.
    */
@@ -29,3 +29,4 @@ export default {
   },
 };
 </script>
+
