@@ -20,6 +20,18 @@ export default [
 
   // Account
   {
+    path: '/new-user',
+    name: 'new-user.index',
+    component: () => import('@/components/UserCreate.vue'),
+
+    // If the user needs to be authenticated to view this page.
+    meta: {
+      auth: true,
+    },
+  },
+  
+  // Account
+  {
     path: '/account',
     name: 'account.index',
     component: () => import('@/views/Account/Index.vue'),

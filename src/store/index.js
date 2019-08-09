@@ -39,7 +39,7 @@ export default new Vuex.Store({
   mutations: {
     setItems(state, { resource, items }) {
       state[resource].items = items;
-    },
-  },
+    }
+  }
 });
 

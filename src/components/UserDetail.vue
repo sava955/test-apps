@@ -2,21 +2,25 @@
   <div class="media border p-3">
     <img
       :src="user.avatar"
-      alt="John Doe"
+      alt="avatar"
       class="mr-3 mt-3 rounded-circle"
       style="width:60px;">
     <div class="media-body">
-      <h4>
+      <h4 class="text-capitalize">
         {{ user.id + '. ' + user.first_name + ' ' + user.last_name }}
       </h4>
+      <span v-if="user.birth_date"><strong>Date of birth: </strong>{{ user.birth_date | prettyTime }}</span>
+      <br>
       <span><strong>Email: </strong>{{ user.email }}</span>
-      <div class="user-control">
+      <br>
+      <span v-if="user.phone_number"><strong>Phone number: </strong>{{ user.phone_number }}</span>
+      <div class="user-control d-flex justify-content-end">
         <a
-          class="btn btn-warning"
+          class="btn btn-success"
           @click="$emit('toggleUpdate', true)">Edit</a>
         <a
           class="btn btn-danger"
-          @click.prevent="showDeleteUserWarning">Delete</a>
+          @click.prevent="($event) => showDeleteUserWarning($event, user.id)">Delete</a>
       </div>
     </div>
   </div>
@@ -33,26 +37,35 @@ export default {
     },
   },
   methods: {
-    /* showDeleteUserWarning(e, userId) {
-      e.stopPropagation();
-      const isConfirm = confirm('Are you sure you want to delete this user?');
+    showDeleteUserWarning(e, userId) {
+      e.stopPropagation()
+      const isConfirm = confirm('Are you sure you want to delete this user?')
 
       if (isConfirm) {
-        debugger;
         this.$store.dispatch('users/deleteUser', userId)
           .then(res => {
-            console.log(res);
+            console.log(res)
           });
       }
-    } */
-    showDeleteUserWarning() {
-      debugger;
-      this.$store.dispatch('users/deleteUser', this.user.id)
-        .then(id => console.log(id));
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
+   .media {
+     margin: 10px;
+   }
+
+   .btn {
+     color: #fff !important;
+   }
+
+   .btn:hover {
+     cursor: pointer;
+   }
+   
+   .btn-success {
+     margin-right: 10px;
+   }
 </style>

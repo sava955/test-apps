@@ -34,9 +34,9 @@ export default {
   },
   methods: {
     changeUpdateState(isUpdate) {
-      this.isUpdateActive = isUpdate;
-    },
-  },
+      this.isUpdateActive = isUpdate
+    }
+  }
 };
 </script>
 

@@ -4,18 +4,19 @@
       <span slot="header">{{ $t('general.welcome') }}</span>
       <div slot="body">
         <div class="container">
-          <!--h2>{{ fullAppName }}</h2-->
+          <div class="d-flex justify-content-end">
+              <button class="btn filter" @click="sortBy('id')">Get By Id</button>
+              <button class="btn filter" @click="sortBy('first_name')">Get By Name</button>
+          </div>
           <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
               <UserCreate />
             </div>
-            <div class="col-sm-9">
-              <!--UsersList v-for="activity in activities" :activity="activity" :key="activity.id" /-->
-              <User
+            <div class="col-sm-8">
+                <User
                 v-for="user in users"
                 :user="user"
                 :key="user.id" />
-              <!--div class="activity-length">Currently {{activityLength}}</div-->
               <paginate
                 :page-count="pagination.total_pages"
                 :click-handler="fetchPaginatedUsers"
@@ -64,7 +65,7 @@ export default {
     ...mapState({
       users: state => state.users.items,
       pagination: state => state.users.pagination,
-    }),
+    })
   },
   created() {
     this.fetchUsers();
@@ -73,7 +74,6 @@ export default {
     ...mapActions('users', ['fetchUsers']),
     handleFetchedUsers() {
       const filter = {};
-      // filter['total_pages'] = this.pagination.total_pages;
       filter.page = this.pagination.page;
 
       return this.fetchUsers({ filter });
@@ -85,11 +85,24 @@ export default {
     setPage(page) {
       this.$store.commit('users/setPage', page);
     },
+    sortBy(prop) {
+      this.$store.commit('users/sortItems', prop);
+    }
   },
 };
 </script>
 
 <style>
+.filter {
+  margin-right: 10px;
+  border-bottom: 3px solid #28a745;
+  border-radius: 0;
+}
+
+.filter:hover {
+  border-bottom: none;
+  color: #28a745;
+}
 .paginationContainer {
   display: inline-block;
   padding-left: 0;
@@ -108,7 +121,7 @@ export default {
   padding: 6px 12px;
   margin-left: -1px;
   line-height: 1.42857143;
-  color: #00d1b2;
+  color: #28a745;
   text-decoration: none;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -118,8 +131,8 @@ export default {
   z-index: 2;
   color: #fff;
   cursor: default;
-  background-color: #00d1b2;
-  border-color: #00d1b2;
+  background-color: #28a745;
+  border-color: #28a745;
 }
 
 .paginationContainer .disabled a {

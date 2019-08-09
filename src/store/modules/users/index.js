@@ -5,7 +5,6 @@ export default {
   namespaced: true,
   state: {
     items: [],
-    item: {},
     pagination: {
       page: 1,
       per_page: 3,
@@ -14,9 +13,6 @@ export default {
     newUser: {},
   },
   getters: {
-    testingGetter() {
-      return 55;
-    },
   },
   actions: {
     fetchUsers({ state, commit }) {
@@ -26,36 +22,35 @@ export default {
           const {
             data, page, total_pages, per_page,
           } = res.data;
-          console.log(res.data);
           commit('setItems', { resource: 'users', items: data }, { root: true });
           commit('setPagination', { page, total_pages });
+          commit('sortItems', res.data);
           return state.items;
         });
     },
     createUser({ commit, state }, create) {
-      debugger;
-      const id = state.items.length + 1;
       return axios.post('https://reqres.in/api/users', create)
         .then((res) => {
-          commit('addUser', create);
+          commit('addUser', res.data)
+          Vue.router.push({
+            name: 'home.index',
+          });
         });
     },
     updateUser({ commit, state }, userData) {
-      debugger;
       return axios.put(`https://reqres.in/api/users/${userData.id}`, userData)
         .then((res) => {
-          console.log(userData);
           commit('mergeUpdate', userData);
-          return userData;
+          return state.items;
         });
     },
     deleteUser({commit}, userId) {
       return axios.delete('https://reqres.in/api/users/' + userId)
         .then((res) => {
-          debugger;
+          localStorage.removeItem('user', 'data');
           commit('deleteUser', userId)
         });
-    },
+    }
   },
   mutations: {
     setPagination(state, { page, total_pages }) {
@@ -64,13 +59,12 @@ export default {
     },
     setPage(state, page) {
       Vue.set(state.pagination, 'page', page);
-      console.log(page);
     },
-    /*addUser(state, userObject) {
-      state.items.push(userObject);
-    },*/
-    addUser(state, userObject) {
-      debugger;
+    sortItems(state, prop) {
+      let list = state.items;
+      Vue.set(list.sort((a, b) => a[prop] < b[prop] ? - 1 : 1))
+    },
+    addUser(state, userObject) { 
       const newPage = state.items.slice(0,2)
       state.items = [userObject, ...newPage]
     },
@@ -79,9 +73,16 @@ export default {
       state.items.splice(index, 1)
     },
     mergeUpdate(state, updatedUser) {
-      debugger;
-      state.item = state.items.find(user => user.id == updatedUser.id)
-      state.item = {...state.item, ...updatedUser}
+      let item = state.items.findIndex(item => item.id == updatedUser.id);
+      state.items.splice(item, 1, {
+        'id': updatedUser.id,
+        'avatar': updatedUser.avatar,
+        'first_name': updatedUser.first_name,
+        'last_name': updatedUser.last_name,
+        'birth_date': updatedUser.birth_date,
+        'email': updatedUser.email,
+        'phone_number': updatedUser.phone_number
+      })
     }
   }
 };

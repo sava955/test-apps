@@ -5,7 +5,7 @@
         :to="{ name: 'home.index' }"
         class="navbar-brand"
       >
-        Vue 2 Boilerplate
+        User List App
       </router-link>
 
       <button
@@ -21,26 +21,7 @@
         class="collapse navbar-collapse"
       >
         <ul class="navbar-nav mr-auto">
-          <router-link
-            :to="{ name: 'home.index' }"
-            active-class="active"
-            class="nav-item"
-            tag="li"
-          >
-            <a class="nav-link">
-              Home
-            </a>
-          </router-link>
-          <router-link
-            :to="{ name: 'account.index' }"
-            active-class="active"
-            class="nav-item"
-            tag="li"
-          >
-            <a class="nav-link">
-              Account
-            </a>
-          </router-link>
+          
         </ul>
         <span class="navbar-text">
           <a

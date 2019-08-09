@@ -50,8 +50,18 @@ import './assets/stylus/app.styl';
 import App from './App.vue';
 import store from './store';
 import Paginate from 'vuejs-paginate';
+import Vuelidate from "vuelidate";
+import moment from 'moment';
 
 Vue.component('paginate', Paginate);
+Vue.use(Vuelidate);
+
+Vue.filter('prettyTime', function(timeStamp) {
+  if (!timeStamp) return ''
+
+  return moment(timeStamp).format('LL')
+})
+
 
 Vue.config.productionTip = false;
 
